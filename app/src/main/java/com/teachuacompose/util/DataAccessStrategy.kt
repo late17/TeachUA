@@ -8,7 +8,6 @@ fun <T> performGetFromDB(
     networkCall: suspend () -> Resource<T>
 ): LiveData<Resource<T>> =
     liveData(Dispatchers.IO) {
-        emit(Resource.loading())
         val responseStatus = networkCall.invoke()
         emit(responseStatus)
     }

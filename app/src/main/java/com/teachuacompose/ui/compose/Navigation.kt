@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -95,13 +96,13 @@ fun Navigation(navController: NavHostController, openDrawer: () -> Unit) {
         //CHALLENGES
         composable(route = Screen.Challenge.route){
             val viewModel =  hiltViewModel<ChallengesViewModel>()
+            LaunchedEffect(key1 = true ) {
+                viewModel.loadChallenges()
+            }
             val challenges = viewModel.challenges.observeAsState(Resource.loading())
-            viewModel.loadChallenges()
-
             Challenges(
                 Screen.Challenge.title,
                 openDrawer,
-                { viewModel.loadChallenges() },
                 challenges
             ) { id -> navController.navigate(Screen.Challenge.withArgs(id.toString())) }
         }
@@ -117,15 +118,13 @@ fun Navigation(navController: NavHostController, openDrawer: () -> Unit) {
         ){ entry ->
             val id = entry.arguments?.getInt("id") ?: 1
             val challengeViewModel = hiltViewModel<ChallengeViewModel>()
-            challengeViewModel.loadChallenge(id)
+            LaunchedEffect(key1 = true ) {
+                challengeViewModel.loadChallenge(id)
+            }
             val challenge = challengeViewModel.challenge.observeAsState(Resource.loading())
 
 
-            Challenge(challenge, {
-                Log.e("DEBUG", "Here1")
-                challengeViewModel.loadChallenge(id)
-                Log.e("DEBUG", "Here2")
-            },
+            Challenge(challenge,
                viewModel = challengeViewModel
 
             ) { navController.popBackStack() }

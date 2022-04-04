@@ -16,11 +16,8 @@ class ChallengeViewModel @Inject constructor(private val challengesServiceInterf
     var challenge : LiveData<Resource<Challenge>> = liveData {  }
 
     fun loadChallenge(id : Int){
+        Log.e("tag", "message")
         challenge = challengesServiceInterface.getChallengeById(id)
-    }
-
-    fun log(){
-        Log.e("asdf", "asdf")
     }
 
 }

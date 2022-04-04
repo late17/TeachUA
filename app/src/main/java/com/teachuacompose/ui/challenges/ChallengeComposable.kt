@@ -35,7 +35,6 @@ import io.noties.markwon.html.HtmlPlugin
 fun Challenges(
     title: String,
     openDrawer: () -> Unit,
-    onButtonReloadClicked: () -> Unit,
     challenges: State<Resource<Challenges>>,
     onClick: (id: Int) -> Unit
 ){
@@ -47,7 +46,6 @@ fun Challenges(
         )
         ResourceWrapper(
             resource = challenges.value,
-            onButtonReloadClick = onButtonReloadClicked
         ) { ChallengesList(challenges = challenges.value.data!!, onClick)}
     }
 }
@@ -78,7 +76,6 @@ fun ChallengesList(challenges: Challenges, onClick : (id : Int) -> Unit) {
 @Composable
 fun Challenge(
     challenge: State<Resource<Challenge>>,
-    onButtonReloadClicked: () -> Unit,
     viewModel: ChallengeViewModel,
     onButtonClicked: () -> Unit,
 ) {
@@ -88,7 +85,7 @@ fun Challenge(
                 buttonIcon = Icons.Filled.ArrowBack,
                 onButtonClicked =  onButtonClicked
             )
-            ResourceWrapper(resource = challenge.value, onButtonReloadClick = onButtonReloadClicked) {
+            ResourceWrapper(resource = challenge.value) {
 
                 LazyColumn(modifier = Modifier.padding(5.dp)) {
                     item {

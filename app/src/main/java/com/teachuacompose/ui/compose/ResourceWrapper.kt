@@ -20,10 +20,9 @@ import java.util.logging.Level.INFO
 @Composable
 fun <T>  ResourceWrapper(
     resource: Resource<T>?,
-    onButtonReloadClick : () -> Unit,
     loadingContent: @Composable () -> Unit = { DefaultLoadingContent() },
     errorContent: @Composable (msg : String?) -> Unit = { errorMessage ->
-        DefaultErrorContent(errorMessage, onButtonReloadClick )
+        DefaultErrorContent(errorMessage )
     },
     content : @Composable (T) -> Unit
 )
@@ -48,15 +47,10 @@ fun DefaultLoadingContent(){
 }
 
 @Composable
-fun DefaultErrorContent(msg: String?, onButtonReloadClick : () -> Unit){
+fun DefaultErrorContent(msg: String?){
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
         Row() {
             Text( errorMessage )
-            IconButton(onClick = {
-                onButtonReloadClick()
-            }) {
-                Icon(Icons.Filled.Refresh, contentDescription = "")
-            }
         }
     }
 }

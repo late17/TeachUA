@@ -1,5 +1,6 @@
 package com.teachuacompose.ui.challenges
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -15,6 +16,7 @@ class ChallengesViewModel @Inject constructor(private val challengesServiceInter
     var challenges : LiveData<Resource<Challenges>> = liveData { Resource.loading(null) }
 
     fun loadChallenges() {
+        Log.e("tag", "message")
         challenges = challengesServiceInterface.getChallenges()
     }
 
