@@ -1,15 +1,13 @@
 package com.teachuacompose.service.challenges
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.teachuacompose.dto.Challenge
 import com.teachuacompose.dto.Challenges
 import com.teachuacompose.util.Resource
 
 interface ChallengeServiceInterface {
 
-    fun getChallengeById(id : Int) : LiveData<Resource<Challenge>>
-
-    fun getChallenges() : LiveData<Resource<Challenges>>
-
-
+    suspend fun getChallenges() : Resource<Challenges>
+    suspend fun getChallenge(id: Int): Resource<Challenge>
 }

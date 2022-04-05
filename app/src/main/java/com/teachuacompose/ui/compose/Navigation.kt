@@ -1,5 +1,6 @@
 package com.teachuacompose.ui.compose
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,6 +10,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -23,6 +25,10 @@ import com.teachuacompose.ui.challenges.Challenge
 import com.teachuacompose.ui.challenges.ChallengeViewModel
 import com.teachuacompose.ui.challenges.Challenges
 import com.teachuacompose.util.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 sealed class Screen(val title : String,val route : String) {
     object Circles : Screen("Гуртки",  "circles")
@@ -95,15 +101,10 @@ fun Navigation(navController: NavHostController, openDrawer: () -> Unit) {
 
         //CHALLENGES
         composable(route = Screen.Challenge.route){
-            val viewModel =  hiltViewModel<ChallengesViewModel>()
-            LaunchedEffect(key1 = true ) {
-                viewModel.loadChallenges()
-            }
-            val challenges = viewModel.challenges.observeAsState(Resource.loading())
+
             Challenges(
                 Screen.Challenge.title,
                 openDrawer,
-                challenges
             ) { id -> navController.navigate(Screen.Challenge.withArgs(id.toString())) }
         }
 
@@ -117,16 +118,8 @@ fun Navigation(navController: NavHostController, openDrawer: () -> Unit) {
             )
         ){ entry ->
             val id = entry.arguments?.getInt("id") ?: 1
-            val challengeViewModel = hiltViewModel<ChallengeViewModel>()
-            LaunchedEffect(key1 = true ) {
-                challengeViewModel.loadChallenge(id)
-            }
-            val challenge = challengeViewModel.challenge.observeAsState(Resource.loading())
-
-
-            Challenge(challenge,
-               viewModel = challengeViewModel
-
+            Challenge(
+                id,
             ) { navController.popBackStack() }
         }
     }

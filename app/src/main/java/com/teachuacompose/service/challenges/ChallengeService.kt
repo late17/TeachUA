@@ -1,18 +1,23 @@
 package com.teachuacompose.service.challenges
 
-import androidx.lifecycle.LiveData
 import com.teachuacompose.dto.Challenge
 import com.teachuacompose.dto.Challenges
 import com.teachuacompose.rest.remote.RemoteDataSource
 import com.teachuacompose.util.Resource
-import com.teachuacompose.util.performGetFromDB
+import com.teachuacompose.util.performGetFromRemote
 
 class ChallengeService(private val remoteDataSource: RemoteDataSource) : ChallengeServiceInterface {
 
-    override fun getChallengeById(id : Int): LiveData<Resource<Challenge>> =
-        performGetFromDB (networkCall ={remoteDataSource.getChallengeById(id)}, key = id)
+    override suspend fun getChallenge(id : Int): Resource<Challenge> {
+        return performGetFromRemote {
+            remoteDataSource.getChallengeById(id)
+        }
+    }
+    override suspend fun getChallenges(): Resource<Challenges> {
+        return performGetFromRemote {
+            remoteDataSource.getChallenges()
+        }
+    }
 
-    override fun getChallenges(): LiveData<Resource<Challenges>> =
-        performGetFromDB { remoteDataSource.getChallenges() }
 
 }

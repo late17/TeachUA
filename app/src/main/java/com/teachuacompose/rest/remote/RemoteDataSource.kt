@@ -3,7 +3,7 @@ package com.teachuacompose.rest.remote
 import com.teachuacompose.rest.ApiClient
 import javax.inject.Inject
 
-class RemoteDataSource @Inject constructor(val apiClient: ApiClient) : BaseDataSource() {
+class RemoteDataSource @Inject constructor(private val apiClient: ApiClient) : BaseDataSource() {
 
     suspend fun getCities() = getResult { apiClient.getCities()}
 

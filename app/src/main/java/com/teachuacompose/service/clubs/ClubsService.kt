@@ -1,14 +1,15 @@
 package com.teachuacompose.service.clubs
 
-import androidx.lifecycle.LiveData
 import com.teachuacompose.dto.Clubs
-import com.teachuacompose.util.Resource
 import com.teachuacompose.rest.remote.RemoteDataSource
-import com.teachuacompose.util.performGetFromDB
+import com.teachuacompose.util.Resource
+import com.teachuacompose.util.performGetFromRemote
 
 class ClubsService (private val remoteDataSource: RemoteDataSource) : ClubsServiceInterface {
 
-    override fun getClubs(): LiveData<Resource<Clubs>> =
-        performGetFromDB { remoteDataSource.getClubs() }
+
+    override suspend fun getClubs(): Resource<Clubs> {
+        return performGetFromRemote { remoteDataSource.getClubs() }
+    }
 
 }
