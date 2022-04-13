@@ -1,7 +1,7 @@
 package com.teachuacompose.service.clubs
 
-import com.teachuacompose.dto.Clubs
-import com.teachuacompose.rest.remote.RemoteDataSource
+import com.teachuacompose.data.model.dto.clubs.Clubs
+import com.teachuacompose.data.rest.dataSource.RemoteDataSource
 import com.teachuacompose.util.Resource
 import com.teachuacompose.util.performGetFromRemote
 

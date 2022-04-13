@@ -83,9 +83,11 @@ dependencies {
 
     // Integration with observables
     implementation("androidx.compose.runtime:runtime-livedata:1.1.1")
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0-alpha05'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0-alpha06'
 
-    //Markwon
-    implementation 'io.noties.markwon:html:4.6.2'
-
+    //Room
+    implementation 'androidx.room:room-runtime:2.4.2'
+    kapt "androidx.room:room-compiler:2.4.2"
+    implementation 'androidx.room:room-ktx:2.4.2'
+    androidTestImplementation "androidx.room:room-testing:2.4.2"
 }

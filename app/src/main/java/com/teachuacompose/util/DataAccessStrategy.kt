@@ -1,8 +1,6 @@
 package com.teachuacompose.util
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import kotlinx.coroutines.Dispatchers
+import org.w3c.dom.Entity
 
 suspend fun <T> performGetFromRemote(
     networkCall: suspend () -> Resource<T>
@@ -10,3 +8,34 @@ suspend fun <T> performGetFromRemote(
     return networkCall.invoke()
 }
 
+suspend fun <UI, ENTITY> performGetFromDb(
+    dbCall : suspend () -> ENTITY,
+    entityToUi : suspend (ENTITY) -> UI
+) : Resource<UI> {
+    val invoke = dbCall.invoke()
+    return if (invoke == null) {
+        Resource.error()
+    } else {
+        Resource.success( entityToUi(invoke) )
+    }
+}
+
+//suspend fun <UI, ENTITY, DTO> performGetFromDbAndRemote(
+//    dbCall : suspend () -> ENTITY,
+//    entityToUi : suspend (ENTITY) -> UI,
+//    dtoToEntity : suspend (DTO) -> ENTITY,
+//    saveToDatabase : suspend (Entity) -> Unit,
+//    networkCall: suspend () -> Resource<DTO>,
+//    ): Resource<UI> {
+//    val dbResult = performGetFromDb(
+//        dbCall = dbCall,
+//        entityToUi = entityToUi
+//    )
+//    return if (dbResult.status == Resource.Status.SUCCESS) {
+//        val entitity = dtoToEntity(dbResult)
+//        saveToDatabase(entitity)
+//        return entityToUi(entitity)
+//    } else {
+//        performGetFromRemote(networkCall)
+//    }
+//}
