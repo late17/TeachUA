@@ -28,14 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.teachuacompose.app.di.baseImageUrl
 import com.teachuacompose.data.model.dto.challenges.Challenges
 import com.teachuacompose.data.model.uiData.challenge.ChallengeUi
-import com.teachuacompose.ui.compose.navigation.ResourceWrapper
+import com.teachuacompose.ui.compose.util.ResourceWrapper
 import com.teachuacompose.ui.compose.util.ShowLinks
 import com.teachuacompose.ui.compose.util.TopBar
 import com.teachuacompose.util.Resource
 import com.teachuacompose.R
+import com.teachuacompose.app.baseImageUrl
 
 
 @Composable

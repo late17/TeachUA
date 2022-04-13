@@ -11,5 +11,10 @@ object TeachUaLinksConstants {
     const val Mail = "mailto:teach.in.ukrainian@gmail.com"
 }
 
+const val baseImageUrl = "https://speak-ukrainian.org.ua/"
+const val baseUrl = "https://speak-ukrainian.org.ua/dev/api/"
+const val errorConnectionMessage = "Помилка мережі"
+
+
 @HiltAndroidApp
 class MainApp:Application()

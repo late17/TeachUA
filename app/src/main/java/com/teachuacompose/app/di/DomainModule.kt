@@ -1,5 +1,6 @@
 package com.teachuacompose.app.di
 
+import com.teachuacompose.app.baseUrl
 import com.teachuacompose.data.rest.ApiClient
 import com.teachuacompose.data.rest.dataSource.RemoteDataSource
 import com.teachuacompose.service.challenges.ChallengeService
@@ -15,10 +16,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-
-const val baseImageUrl = "https://speak-ukrainian.org.ua/"
-const val baseUrl = "https://speak-ukrainian.org.ua/dev/api/"
-const val errorMessage = "Помилка мережі"
 
 @Module
 @InstallIn(SingletonComponent::class)

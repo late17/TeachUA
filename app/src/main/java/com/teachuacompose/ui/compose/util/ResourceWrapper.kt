@@ -1,4 +1,4 @@
-package com.teachuacompose.ui.compose.navigation
+package com.teachuacompose.ui.compose.util
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -10,12 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.teachuacompose.app.errorConnectionMessage
 import com.teachuacompose.util.Resource
 
-
+/*
+Compose UI function that based on Resource STATUS show either data/loading/error
+ */
 @Composable
 fun <T>  ResourceWrapper(
     resource: Resource<T>?,
@@ -47,21 +48,6 @@ fun DefaultLoadingContent(){
 }
 
 
-
-class stringProvider : PreviewParameterProvider<String> {
-    override val values: Sequence<String> = sequenceOf(
-        "lkjsdf;a"
-    )
-}
-
-class EmptyFunctionProvider : PreviewParameterProvider<() -> Unit>{
-    override val values: Sequence<() -> Unit> =
-        sequenceOf(
-            {}
-        )
-
-}
-
 @Composable
 fun DefaultErrorContent(
     errorMessage: String?,
@@ -73,7 +59,7 @@ fun DefaultErrorContent(
             contentAlignment = Alignment.Center
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(com.teachuacompose.app.di.errorMessage)
+                Text(errorConnectionMessage)
                 IconButton(onClick = {function()}) {
                     Icon(imageVector = Icons.Filled.Refresh, contentDescription = "")
                 }

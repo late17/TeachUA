@@ -1,5 +1,8 @@
 package com.teachuacompose.util
 
+/*
+Data class made to deliver information about response and data itself
+ */
 data class Resource<out T>(
     val status: Status,
     val data : T?,
