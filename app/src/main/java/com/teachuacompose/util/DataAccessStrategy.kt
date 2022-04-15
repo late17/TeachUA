@@ -1,7 +1,5 @@
 package com.teachuacompose.util
 
-import org.w3c.dom.Entity
-
 suspend fun <T> performGetFromRemote(
     networkCall: suspend () -> Resource<T>
 ) : Resource<T> {

@@ -1,6 +1,8 @@
 package com.teachuacompose.app.di
 
 import com.teachuacompose.app.baseUrl
+import com.teachuacompose.data.dataBase.TeachUaDatabase
+import com.teachuacompose.data.dataBase.dataSource.LocalDataSource
 import com.teachuacompose.data.rest.ApiClient
 import com.teachuacompose.data.rest.dataSource.RemoteDataSource
 import com.teachuacompose.service.challenges.ChallengeService
@@ -21,6 +23,39 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class DomainModule {
 
+    //
+    //*******SERVICES*******
+    //
+    @Singleton
+    @Provides
+    fun providesClubServiceInterface() : ClubsServiceInterface {
+        return ClubsService(providesRemoteDataSource())
+    }
+
+    @Singleton
+    @Provides
+    fun providesChallengeServiceInterface() : ChallengeServiceInterface {
+        return ChallengeService(providesRemoteDataSource(), providesLocalDataSource())
+    }
+
+    //
+    //*******LOCAL*******
+    //
+    @Provides
+    fun providesTeachUaDatabase() : TeachUaDatabase.Companion{
+        return TeachUaDatabase.Companion
+    }
+
+    @Singleton
+    @Provides
+    fun providesLocalDataSource() : LocalDataSource{
+        return LocalDataSource(providesTeachUaDatabase())
+    }
+
+
+    //
+    //*******REMOTE*******
+    //
     @Singleton
     @Provides
     fun providesLoggingInterceptor() : HttpLoggingInterceptor {
@@ -37,7 +72,6 @@ class DomainModule {
             .build()
     }
 
-
     @Singleton
     @Provides
     fun providesRetrofitRepository(): ApiClient {
@@ -52,17 +86,5 @@ class DomainModule {
     @Provides
     fun providesRemoteDataSource() : RemoteDataSource {
         return RemoteDataSource(apiClient = providesRetrofitRepository())
-    }
-
-    @Singleton
-    @Provides
-    fun providesClubServiceInterface() : ClubsServiceInterface {
-        return ClubsService(providesRemoteDataSource())
-    }
-
-    @Singleton
-    @Provides
-    fun providesChallengeServiceInterface() : ChallengeServiceInterface {
-        return ChallengeService(providesRemoteDataSource())
     }
 }

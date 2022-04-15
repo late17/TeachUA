@@ -7,6 +7,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.core.text.HtmlCompat
 import com.teachuacompose.ui.theme.Typography
 import kotlin.math.min
 
@@ -21,7 +22,8 @@ private val tags = linkedMapOf(
     "<h1>" to "</h1>",
     "<h3>" to "</h3>",
     "<em>" to "</em>",
-    "<strong>" to "</strong>"
+    "<strong>" to "</strong>",
+    "<a" to "</a>"
 )
 
 
@@ -34,14 +36,13 @@ fun String.parseHtml(): AnnotatedString {
 
     //delete <p> tag but puts \n instead of </p> in the next cycle
     var newlineReplace = this.replace("<p>", "")
-    for(tag in placeEnterTag) {
+    placeEnterTag.forEach{ tag ->
         newlineReplace = newlineReplace.replace(tag, "\n")
     }
-
-
     return buildAnnotatedString {
         recurse(newlineReplace, this)
     }
+
 }
 
 /**
@@ -67,6 +68,8 @@ private fun recurse(string: String, to: AnnotatedString.Builder) {
         //If the String starts with an opening tag, apply the appropriate
         //SpanStyle and continue recursing.
         tags.any { string.startsWith(it.key) } -> {
+            function(startTag, string, to)
+
             to.pushStyle(tagToStyle(startTag!!))
             recurse(string.removeRange(0, startTag.length), to)
         }
@@ -101,10 +104,13 @@ fun function(tag: String?, string: String, to: AnnotatedString.Builder) {
     when (tag) {
         "<a" -> {
             var index = string.indexOf("\"")
-            val str = string.removeRange(0, index+1)
+
+            val str = string.substring(index+1)
             index = str.indexOf("\"")
+
             val href = str.substring(0, index)
-            index = str.indexOf(">")
+
+            index = string.indexOf(">")
             val end = str.indexOf("</a>")
             to.addStringAnnotation(tag = "URL", annotation = href, start =  index, end = end)
         }

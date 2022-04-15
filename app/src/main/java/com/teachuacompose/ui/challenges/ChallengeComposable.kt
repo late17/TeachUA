@@ -36,6 +36,7 @@ import com.teachuacompose.ui.compose.util.TopBar
 import com.teachuacompose.util.Resource
 import com.teachuacompose.R
 import com.teachuacompose.app.baseImageUrl
+import com.teachuacompose.ui.compose.HtmlText
 
 
 @Composable
@@ -150,10 +151,8 @@ fun ChallengeContent(challenge: Resource<ChallengeUi>, onClick: () -> Unit) {
                     }
                     ShowLinks()
 
-                    val annotatedString = challenge.data?.description ?: buildAnnotatedString { }
-
-                    Text(text = annotatedString, modifier = Modifier.padding(4.dp))
-
+                    val annotatedString = challenge.data?.description ?: ""
+                    HtmlText(text = annotatedString, modifier = Modifier.padding(4.dp))
 
                 }
             }
