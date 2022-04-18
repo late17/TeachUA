@@ -40,26 +40,34 @@ private val screens = listOf(
 
 @Composable
 fun Drawer(
-    onDestinationClicked :(route :String) -> Unit
+    onDestinationClicked: (route: String) -> Unit,
+    darkTheme: Boolean,
+    changeTheme: () -> Unit
 ) {
     Surface(
         color = MaterialTheme.colors.background,
         contentColor = MaterialTheme.colors.onBackground,
         modifier = Modifier.fillMaxSize()) {
-        Column {
-            Divider(color = MaterialTheme.colors.onBackground, thickness = 1.dp);
+        Column(modifier = Modifier.padding(start = 5.dp)) {
             screens.forEach{ screen ->
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(
                     text = screen.title,
                     style = MaterialTheme.typography.h5,
-                    modifier = Modifier.clickable{
-                        onDestinationClicked(screen.route)
-                    }.padding(start = 5.dp)
+                    modifier = Modifier
+                        .clickable {
+                            onDestinationClicked(screen.route)
+                        }
                 )
             }
             Spacer(modifier = Modifier.height(24.dp))
             Divider(color = MaterialTheme.colors.onBackground, thickness = 1.dp)
+            Spacer(modifier = Modifier.height(24.dp))
+            Row() {
+                Text("Dark theme")
+                Spacer(modifier = Modifier.width(24.dp))
+                Switch(checked = darkTheme, onCheckedChange = {changeTheme()})
+            }
 
         }
     }

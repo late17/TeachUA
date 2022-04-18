@@ -38,6 +38,8 @@ import androidx.compose.ui.graphics.Color
 private val DarkColorPalette = darkColors(
     primary = md_theme_dark_onPrimary,
     onPrimary = Color.White,
+    primaryVariant = Orange,
+
     background = md_theme_dark_background,
     onBackground = md_theme_dark_onBackground,
     surface = md_theme_dark_primaryContainer,
@@ -45,13 +47,13 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = Orange500,
+    primary = Orange,
     onPrimary = Color.Black,
-    primaryVariant = Orange700,
+    primaryVariant = OrangeDark,
 
-    background = md_theme_light_background,
+    background = Gray,
     onBackground = md_theme_light_onBackground,
-    surface = Orange200,
+    surface = OrangeLight,
     onSurface = md_theme_light_onSurface
 
     /* Other default colors to override

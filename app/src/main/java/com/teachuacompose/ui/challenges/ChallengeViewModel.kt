@@ -3,7 +3,7 @@ package com.teachuacompose.ui.challenges
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teachuacompose.data.model.uiData.challenge.ChallengeUi
-import com.teachuacompose.service.challenges.ChallengeServiceInterface
+import com.teachuacompose.service.challenges.ChallengeInterface
 import com.teachuacompose.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ChallengeViewModel @Inject constructor(private val challengesServiceInterface: ChallengeServiceInterface) : ViewModel() {
+class ChallengeViewModel @Inject constructor(private val challengesServiceInterface: ChallengeInterface) : ViewModel() {
 
     private var _challenge = MutableStateFlow<Resource<ChallengeUi>>(Resource.loading())
 

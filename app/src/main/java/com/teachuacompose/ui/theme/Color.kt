@@ -8,11 +8,13 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
 val Sandstone = Color(0xFF756762)
-val Orange500 = Color(0xFFF38916)
-val Orange700 = Color(0xFF2f1400)
-val Orange200 = Color(0xFFf5d8cc)
+val Orange = Color(0xFFF38916)
+val OrangeDark = Color(0xFF2f1400)
+val OrangeLight = Color(0xFFf5d8cc)
 val SanJuan = Color(0xFF2d4c68)
 val White = Color(0xFFFFFFFF)
+val Gray = Color(0xFFE0E0E0)
+
 
 
 

@@ -2,8 +2,7 @@ package com.teachuacompose.ui.challenges
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -153,6 +152,7 @@ fun ChallengeContent(challenge: Resource<ChallengeUi>, onClick: () -> Unit) {
 
                     val annotatedString = challenge.data?.description ?: ""
                     HtmlText(text = annotatedString, modifier = Modifier.padding(4.dp))
+
 
                 }
             }

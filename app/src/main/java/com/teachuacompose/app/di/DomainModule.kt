@@ -6,9 +6,11 @@ import com.teachuacompose.data.dataBase.dataSource.LocalDataSource
 import com.teachuacompose.data.rest.ApiClient
 import com.teachuacompose.data.rest.dataSource.RemoteDataSource
 import com.teachuacompose.service.challenges.ChallengeService
-import com.teachuacompose.service.challenges.ChallengeServiceInterface
+import com.teachuacompose.service.challenges.ChallengeInterface
 import com.teachuacompose.service.clubs.ClubsService
-import com.teachuacompose.service.clubs.ClubsServiceInterface
+import com.teachuacompose.service.clubs.ClubsInterface
+import com.teachuacompose.service.mainActivity.MainActivityInterface
+import com.teachuacompose.service.mainActivity.MainActivityService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,14 +30,20 @@ class DomainModule {
     //
     @Singleton
     @Provides
-    fun providesClubServiceInterface() : ClubsServiceInterface {
+    fun providesClubInterface() : ClubsInterface {
         return ClubsService(providesRemoteDataSource())
     }
 
     @Singleton
     @Provides
-    fun providesChallengeServiceInterface() : ChallengeServiceInterface {
+    fun providesChallengeInterface() : ChallengeInterface {
         return ChallengeService(providesRemoteDataSource(), providesLocalDataSource())
+    }
+
+    @Singleton
+    @Provides
+    fun providesMainActivityInterface() : MainActivityInterface {
+        return MainActivityService()
     }
 
     //

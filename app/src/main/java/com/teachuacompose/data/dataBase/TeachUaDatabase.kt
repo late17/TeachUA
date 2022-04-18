@@ -23,7 +23,7 @@ abstract class TeachUaDatabase: RoomDatabase() {
         DB require context for init, so in order to not pass context everytime,
         it should be init at the start from mainActivity class.
          */
-        fun buildTeachUaDatabase(context: Context) {
+        fun initTeachUaDatabase(context: Context) {
             instance = Room.databaseBuilder(
                     context,
                     TeachUaDatabase::class.java,

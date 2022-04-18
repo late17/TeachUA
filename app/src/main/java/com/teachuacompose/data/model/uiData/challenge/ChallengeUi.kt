@@ -2,6 +2,7 @@ package com.teachuacompose.data.model.uiData.challenge
 
 import com.teachuacompose.data.dataBase.entity.ChallengeEntity
 import com.teachuacompose.data.model.dto.challenge.ChallengeDto
+import com.teachuacompose.data.model.dto.challenge.task.Task
 import com.teachuacompose.util.parseHtml
 
 data class ChallengeUi(
@@ -24,6 +25,6 @@ data class ChallengeUi(
         challengeDto.id,
         challengeDto.name,
         challengeDto.picture,
-        challengeDto.title
+        challengeDto.title,
     )
 }

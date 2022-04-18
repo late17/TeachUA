@@ -1,15 +1,13 @@
-package com.teachuacompose.ui.activity
+package com.teachuacompose.ui
 
 import android.os.Bundle
-import android.widget.EditText
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.teachuacompose.data.dataBase.TeachUaDatabase
 import com.teachuacompose.ui.compose.navigation.Drawer
@@ -21,9 +19,11 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TeachUaDatabase.buildTeachUaDatabase(context = applicationContext)
+        TeachUaDatabase.initTeachUaDatabase(context = applicationContext)
+
         setContent {
             AppMainScreen()
         }
@@ -31,10 +31,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview
 @Composable
 fun AppMainScreen() {
-    TeachUaComposeTheme() {
+    val mainActivityViewModel = hiltViewModel<MainActivityViewModel>()
+    LaunchedEffect(key1 = true) {
+        mainActivityViewModel.load()
+    }
+    val darkTheme by mainActivityViewModel.theme.collectAsState(false)
+
+    TeachUaComposeTheme(darkTheme = darkTheme) {
         Surface(color = MaterialTheme.colors.background, modifier = Modifier.fillMaxSize()) {
             val navController = rememberNavController()
             val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -44,12 +49,13 @@ fun AppMainScreen() {
             ModalDrawer(
                 drawerState = drawerState,
                 drawerContent = {
-                    Drawer(onDestinationClicked = {
-                            route ->
-                        scope.launch { drawerState.close() }
-                        navController.navigate(route)
-                    }
-                    )
+                    Drawer(
+                        onDestinationClicked = { route ->
+                            scope.launch { drawerState.close() }
+                            navController.navigate(route)
+                                               },
+                        darkTheme
+                    ) { mainActivityViewModel.switchDarkTheme(darkTheme) }
                 }
             ) {
                 Navigation(navController) {

@@ -5,7 +5,7 @@ import com.teachuacompose.data.rest.dataSource.RemoteDataSource
 import com.teachuacompose.util.Resource
 import com.teachuacompose.util.performGetFromRemote
 
-class ClubsService (private val remoteDataSource: RemoteDataSource) : ClubsServiceInterface {
+class ClubsService (private val remoteDataSource: RemoteDataSource) : ClubsInterface {
 
 
     override suspend fun getClubs(): Resource<Clubs> {
