@@ -1,4 +1,4 @@
-package com.teachuacompose.service.clubs
+package com.teachuacompose.repository.clubs
 
 import com.teachuacompose.data.model.dto.clubs.Clubs
 import com.teachuacompose.data.rest.dataSource.RemoteDataSource

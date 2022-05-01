@@ -13,4 +13,5 @@ class RemoteDataSource @Inject constructor(private val apiClient: ApiClient) : B
 
     suspend fun getChallenges() = getResult { apiClient.getChallenges() }
 
+    suspend fun getTask(id : Int) = getResult { apiClient.getTask(id) }
 }

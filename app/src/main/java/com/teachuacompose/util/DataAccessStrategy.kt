@@ -1,14 +1,18 @@
 package com.teachuacompose.util
 
+import com.teachuacompose.data.dataBase.entity.TaskEntity
+import com.teachuacompose.data.model.dto.challenge.task.Task
+import org.w3c.dom.Entity
+
 suspend fun <T> performGetFromRemote(
     networkCall: suspend () -> Resource<T>
 ) : Resource<T> {
     return networkCall.invoke()
 }
 
-suspend fun <UI, ENTITY> performGetFromDb(
-    dbCall : suspend () -> ENTITY,
-    entityToUi : suspend (ENTITY) -> UI
+suspend fun <UI, ENTITY> performGetFromLocal(
+    dbCall: suspend () -> ENTITY,
+    entityToUi: (ENTITY) -> UI
 ) : Resource<UI> {
     val invoke = dbCall.invoke()
     return if (invoke == null) {

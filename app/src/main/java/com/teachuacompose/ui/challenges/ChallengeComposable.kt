@@ -3,10 +3,9 @@ package com.teachuacompose.ui.challenges
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -21,21 +20,18 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.teachuacompose.data.model.dto.challenges.Challenges
 import com.teachuacompose.data.model.uiData.challenge.ChallengeUi
-import com.teachuacompose.ui.compose.util.ResourceWrapper
-import com.teachuacompose.ui.compose.util.ShowLinks
-import com.teachuacompose.ui.compose.util.TopBar
 import com.teachuacompose.util.Resource
 import com.teachuacompose.R
 import com.teachuacompose.app.baseImageUrl
+import com.teachuacompose.data.model.dto.challenges.ChallengeItem
 import com.teachuacompose.ui.compose.HtmlText
+import com.teachuacompose.ui.compose.util.*
 
 
 @Composable
@@ -70,7 +66,7 @@ fun Challenges(
 }
 
 @Composable
-fun ChallengesList(challenges: Challenges, onClick: (id: Int) -> Unit) {
+fun ChallengesList(challenges: ArrayList<ChallengeItem>, onClick: (id: Int) -> Unit) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 10.dp)
@@ -84,7 +80,7 @@ fun ChallengesList(challenges: Challenges, onClick: (id: Int) -> Unit) {
                 Icon(imageVector = Icons.Sharp.Favorite, contentDescription = "")
                 Spacer(Modifier.width(15.dp))
                 Text(
-                    text = it.title,
+                    text = it.name,
                     fontSize = 25.sp
                 )
 
@@ -98,6 +94,7 @@ fun ChallengesList(challenges: Challenges, onClick: (id: Int) -> Unit) {
 @Composable
 fun Challenge(
     id: Int,
+    navigateToTask: (Int) -> Unit,
     onButtonClicked: () -> Unit,
 ) {
 
@@ -113,93 +110,76 @@ fun Challenge(
             buttonIcon = Icons.Filled.ArrowBack,
             onButtonClicked = onButtonClicked
         )
-        ChallengeContent(challenge) { challengeViewModel.load(id) }
+        ChallengePage(challenge, navigateToTask) { challengeViewModel.load(id) }
     }
 }
 
 @Composable
-fun ChallengeContent(challenge: Resource<ChallengeUi>, onClick: () -> Unit) {
+fun ChallengePage(
+    challenge: Resource<ChallengeUi>,
+    navigateToTask: (Int) -> Unit,
+    onClick: () -> Unit) {
     ResourceWrapper(resource = challenge, onReloadButtonClick = { onClick() }) {
-        LazyColumn(modifier = Modifier.padding(5.dp)) {
-            item {
-                Column {
-                    Surface(
-                        shape = MaterialTheme.shapes.medium,
-                        color = MaterialTheme.colors.primaryVariant,
-                        modifier = Modifier.height(190.dp),
+
+        val rememberScrollState = rememberScrollState()
+        Column(
+            modifier = Modifier
+                .padding(5.dp)
+                .verticalScroll(rememberScrollState)
+        ) {
+            ImageAndTitleOnIt(challenge.data?.picture ?: "", challenge.data?.title ?: "")
+            ShowLinks()
+            HtmlTextWrapper(challenge.data?.description ?: "")
+            BottomTasks(challenge, navigateToTask)
+        }
+    }
+
+}
+
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun BottomTasks(challenge: Resource<ChallengeUi>, navigateToTask: (Int) -> Unit) {
+    challenge.data?.let {
+        LazyRow(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            items(it.tasks) { task ->
+                Card(
+                    shape = MaterialTheme.shapes.medium,
+                    modifier = Modifier
+                        .height(215.dp)
+                        .padding(10.dp)
+                        .width(230.dp),
+                    onClick = { navigateToTask(task.id) }
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(5.dp)
                     ) {
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                        Surface(
+                            color = MaterialTheme.colors.surface,
+                            shape = MaterialTheme.shapes.medium,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(120.dp)
+                        ) {
                             AsyncImage(
-                                model = baseImageUrl + challenge.data?.picture,
+                                model = baseImageUrl + task.picture,
                                 contentDescription = "",
-                                contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize(),
-                                colorFilter = ColorFilter.tint(
-                                    color = Color(R.color.tint),
-                                    blendMode = BlendMode.Darken
-                                )
-                            )
-                            Text(
-                                text = challenge.data?.title ?: "",
-                                color = Color.White,
-                                style = MaterialTheme.typography.h4,
-                                textAlign = TextAlign.Center
+                                contentScale = ContentScale.Crop
                             )
                         }
 
+                        val annotatedString = task.name
+                        HtmlText(text = annotatedString,
+                            modifier = Modifier.padding(4.dp),
+                            maxLines = 3)
                     }
-                    ShowLinks()
-
-                    val annotatedString = challenge.data?.description ?: ""
-                    HtmlText(text = annotatedString, modifier = Modifier.padding(4.dp))
-
 
                 }
             }
-
         }
     }
 }
 
-
-//@Composable
-//fun ChallengeCard(id : Int) {
-//    val challengeViewModel = hiltViewModel<ChallengeViewModel>()
-//    LaunchedEffect(key1 = true) {
-//        challengeViewModel.load(id)
-//    }
-//    val challenge by challengeViewModel.challenge.collectAsState(Resource.loading())
-//
-//    Surface(
-//        modifier = Modifier.size(width = 300.dp, height = 300.dp),
-//        shape = MaterialTheme.shapes.large,
-//        color = MaterialTheme.colors.surface
-//    ) {
-//        Column() {
-//            Box(modifier = Modifier.size(height = 200.dp, width = 300.dp), contentAlignment = Alignment.Center) {
-//                AsyncImage(
-//                    model = baseImageUrl + challenge.data?.picture,
-//                    contentDescription = "",
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier.fillMaxSize(),
-//                    colorFilter = ColorFilter.tint(
-//                        color = Color(0x6F000000), blendMode = BlendMode.Darken)
-//                )
-//
-//                Text(
-//                    text = challenge.data?.title ?: "",
-//                    color = Color.White,
-//                    style = MaterialTheme.typography.h4,
-//                    textAlign = TextAlign.Center
-//                    )
-//            }
-//            Surface(modifier = Modifier.fillMaxSize()) {
-//                val text = challenge.data?.description ?: buildAnnotatedString { }
-//                Text(text = text)
-//            }
-//        }
-//
-//    }
-//}
-//
 

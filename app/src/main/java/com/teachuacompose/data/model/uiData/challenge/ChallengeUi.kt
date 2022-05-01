@@ -1,9 +1,9 @@
 package com.teachuacompose.data.model.uiData.challenge
 
 import com.teachuacompose.data.dataBase.entity.ChallengeEntity
+import com.teachuacompose.data.dataBase.entity.TaskEntity
 import com.teachuacompose.data.model.dto.challenge.ChallengeDto
 import com.teachuacompose.data.model.dto.challenge.task.Task
-import com.teachuacompose.util.parseHtml
 
 data class ChallengeUi(
     val description: String,
@@ -11,13 +11,15 @@ data class ChallengeUi(
     val name: String,
     val picture: String,
     val title: String,
-) {
-    constructor(challengeEntity: ChallengeEntity) : this(
+    val tasks: List<TaskUi>
+    ) {
+    constructor(challengeEntity: ChallengeEntity, tasks: List<TaskEntity>) : this(
         challengeEntity.description,
         challengeEntity.id,
         challengeEntity.name,
         challengeEntity.picture,
-        challengeEntity.title
+        challengeEntity.title,
+        tasks.map { it -> TaskUi(it) }
     )
 
     constructor(challengeDto: ChallengeDto) : this(
@@ -26,5 +28,6 @@ data class ChallengeUi(
         challengeDto.name,
         challengeDto.picture,
         challengeDto.title,
+        challengeDto.tasks.map { task -> TaskUi(task) }
     )
 }

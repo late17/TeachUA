@@ -1,5 +1,6 @@
 package com.teachuacompose.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -8,62 +9,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 
-//private val MaterialLightTheme = lightColors(
-//
-//    primary = md_theme_light_primary,
-//    onPrimary = md_theme_light_onPrimary,
-//    secondary = md_theme_light_secondary,
-//    onSecondary = md_theme_light_onSecondary,
-//    error = md_theme_light_error,
-//    onError = md_theme_light_onError,
-//    background = md_theme_light_background,
-//    onBackground = md_theme_light_onBackground,
-//    surface = md_theme_light_surface,
-//    onSurface = md_theme_light_onSurface,
-//)
-//private val MaterialDarkTheme = darkColors(
-//
-//    primary = md_theme_dark_primary,
-//    onPrimary = md_theme_dark_onPrimary,
-//    secondary = md_theme_dark_secondary,
-//    onSecondary = md_theme_dark_onSecondary,
-//    error = md_theme_dark_error,
-//    onError = md_theme_dark_onError,
-//    background = md_theme_dark_background,
-//    onBackground = md_theme_dark_onBackground,
-//    surface = md_theme_dark_surface,
-//    onSurface = md_theme_dark_onSurface,
-//)
+
 
 private val DarkColorPalette = darkColors(
-    primary = md_theme_dark_onPrimary,
-    onPrimary = Color.White,
-    primaryVariant = Orange,
+    primary = Orange900,
+    onPrimary = White,
+    secondaryVariant = Blue600,
 
-    background = md_theme_dark_background,
-    onBackground = md_theme_dark_onBackground,
-    surface = md_theme_dark_primaryContainer,
-    onSurface = md_theme_dark_onPrimaryContainer
+    background = Gray900,
+    onBackground = White,
+    surface = Orange900,
+    onSurface = White
 )
 
 private val LightColorPalette = lightColors(
-    primary = Orange,
-    onPrimary = Color.Black,
-    primaryVariant = OrangeDark,
+    primary = Orange600,
+    onPrimary = Black,
+    secondaryVariant = Blue600,
 
-    background = Gray,
-    onBackground = md_theme_light_onBackground,
-    surface = OrangeLight,
-    onSurface = md_theme_light_onSurface
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    background = Gray200,
+    onBackground = Black,
+    surface = Orange100,
+    onSurface = Black
 )
 
 @Composable

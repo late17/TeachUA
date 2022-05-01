@@ -53,7 +53,7 @@ fun DefaultErrorContent(
     errorMessage: String?,
     function: () -> Unit
 ){
-    Surface(contentColor = Color.Black, modifier = Modifier.fillMaxSize()) {
+    Surface(color = MaterialTheme.colors.background, contentColor = MaterialTheme.colors.onBackground, modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center

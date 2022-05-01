@@ -33,6 +33,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += [
+                "-Xallow-jvm-ir-dependencies",
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+        ]
     }
     buildFeatures {
         compose true
@@ -46,6 +51,7 @@ android {
         }
     }
 }
+
 
 dependencies {
 
@@ -62,7 +68,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation "androidx.navigation:navigation-compose:2.4.2"
-    implementation 'androidx.compose.runtime:runtime-livedata:1.2.0-alpha07'
+    implementation 'androidx.compose.runtime:runtime-livedata:1.2.0-alpha08'
 
 
 
@@ -76,14 +82,14 @@ dependencies {
     //internet
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+    implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.6')
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.6'
     //image loader
-    implementation("io.coil-kt:coil-compose:2.0.0-rc02")
+    implementation('io.coil-kt:coil-compose:2.0.0-rc03')
 
     // Integration with observables
     implementation("androidx.compose.runtime:runtime-livedata:1.1.1")
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0-alpha06'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0-beta01'
 
     //Room
     implementation 'androidx.room:room-runtime:2.4.2'

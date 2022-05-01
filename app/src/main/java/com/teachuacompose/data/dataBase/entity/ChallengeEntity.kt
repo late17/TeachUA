@@ -13,12 +13,15 @@ data class ChallengeEntity(
     val name: String,
     val picture: String,
     val title: String,
+    val sortNumber: Int
+
 ) {
     constructor(challengeDto: ChallengeDto) : this(
         challengeDto.description,
         challengeDto.id,
         challengeDto.name,
         challengeDto.picture,
-        challengeDto.title
+        challengeDto.title,
+        challengeDto.sortNumber
     )
 }

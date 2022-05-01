@@ -1,12 +1,13 @@
-package com.teachuacompose.service.challenges
+package com.teachuacompose.repository.challenges
 
+import com.teachuacompose.data.model.dto.challenges.ChallengeItem
 import com.teachuacompose.data.model.dto.challenges.Challenges
 import com.teachuacompose.data.model.uiData.challenge.ChallengeUi
 import com.teachuacompose.util.Resource
 
-interface ChallengeInterface {
+interface ChallengeRepositoryInterface {
 
-    suspend fun getChallenges() : Resource<Challenges>
+    suspend fun getChallenges() : Resource<ArrayList<ChallengeItem>>
     suspend fun getChallenge(id: Int):  Resource<ChallengeUi>
 
 }
